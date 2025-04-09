@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To do list</title>
+</head>
+<style>
+    html {
+  touch-action: manipulation;
+}
+    #head{
+        padding: 10px;
+        justify-content: center;
+        text-align: center;
+        height: 54px;
+        align-items: center;
+        border-radius: 10px;
+            }
+    #task,#Submit,li,p{
+        padding: 10px;
+        border-radius: 10px;
+        border: transparent;
+        border: none;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    }
+    #Submit{
+        cursor: pointer;
+        color: wheat;
+        background-color: rebeccapurple;
+    }
+    #Submit:hover{
+        background-color: rgb(126, 69, 183);
+    }
+    #Submit:active{
+        background-color: rgb(165, 107, 224);
+    }
+    #list{
+        background-color: rgb(63, 54, 54);
+        border-radius: 10px;
+        border: transparent;
+        margin: auto;
+        justify-content: space-between;
+        align-items: center; 
+        align-self: center;
+        margin-top: 2%;
+    }
+    p{
+        text-indent: 8px;
+        margin-top: -2%;
+        color: red;  
+    }
+    #head{
+        background-color: rgb(63, 54, 54);
+    }
+</style>
+<body>
+    <h1 style="margin: auto;
+    text-align: center; 
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; color: wheat;
+    background-color: black; padding: 10px; ">To do list</h1><br>
+    <div id="head">
+        <label id="Add" style=" font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        color: wheat; cursor: pointer; ">Add a task:&nbsp;</label>
+        <input type="text" placeholder="Enter a task" required id="task">
+        <button id="Submit" onclick="list()">Submit</button>
+        <p id="error"></p>
+    </div>
+    <ol id="list">
+
+    </ol>
+    <script>
+        document.getElementById("Add").addEventListener("click",function(){
+            document.getElementById("task").focus();
+        })
+        document.getElementById("task"),addEventListener("keydown",function(event){
+            if(event.key === "Enter" ){
+                list();
+            }
+        })
+        function list(){
+            if(document.getElementById("task").value == ""){
+                document.getElementById("error").innerHTML = "Please enter a task";   
+            }
+            else{
+                document.getElementById("error").innerHTML = "";  
+                let list = document.createElement("div");
+                let task = document.getElementById("task");
+
+                let completed = document.createElement("input")
+                completed.type = "checkbox";
+
+                let li = document.createElement("li");
+                li.innerText = task.value;
+                li.style.color = "white"
+                
+                let num = document.getElementById("list");
+                list.style.listStyleType = "decimal";
+
+                let del = document.createElement("button");
+                del.textContent = "🗑️"; 
+
+                list.style.display = "flex";
+                list.style.justifyContent = "space-between"; 
+                list.style.alignItems = "center"; 
+                list.style.padding = "10px"; 
+
+                let joinbtns = document.createElement("div");
+                joinbtns.style.display = "flex";
+                joinbtns.style.alignItems = "center";
+
+                completed.style.marginRight = "10px";
+                del.style.borderRadius = "8px"; 
+                del.style.border = "transparent";
+                del.style.backgroundColor = "lightgrey";
+                del.style.cursor = "pointer";
+
+                del.onmouseover = function(){
+                    del.style.backgroundColor = "gainsboro";
+                }
+                del.onmouseleave = function(){
+                    del.style.backgroundColor = "lightgrey";
+                }
+                del.onclick = function(){
+                    del.style.backgroundColor = "#f0f0f0";
+                    list.remove();
+                }
+
+                completed.onclick = function(){
+                    if(this.checked){
+                    li.style.textDecoration= "line-through";
+                    li.style.color = "lightgrey";
+                    li.style.width = "1000%"
+                }
+                else{
+                    li.style.textDecoration = "none"; 
+                    li.style.color = "white"; 
+
+                }}
+
+
+                joinbtns.appendChild(completed);
+                joinbtns.appendChild(del);
+                list.appendChild(li);
+                list.appendChild(joinbtns);
+
+                document.getElementById("task").value = "";
+
+                document.getElementById("list").appendChild(list);
+            }
+    }
+    </script>
+</body>
+</html>
